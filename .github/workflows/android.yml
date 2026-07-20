@@ -20,7 +20,7 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: 3.6.2
+          version: 3.6.2-stable
           use-dotnet: false
           include-templates: true
 
@@ -32,5 +32,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: OpenCity-APK
+          name: android-apk
           path: project/OpenCity.apk
