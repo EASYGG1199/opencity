@@ -11,18 +11,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install unzip
-        run: sudo apt-get update && sudo apt-get install -y unzip
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip wget
 
       - name: Unzip project
         run: unzip opencity2.zip -d project
 
-      - name: Setup Godot
-        uses: chickensoft-games/setup-godot@v2
-        with:
-          version: 3.6.2-stable
-          use-dotnet: false
-          include-templates: true
+      # 手动下载 Godot 3.6.1（官方地址）
+      - name: Download Godot
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/3.6.1/Godot_v3.6.1-stable_linux.x86_64.zip
+          unzip Godot_v3.6.1-stable_linux.x86_64.zip
+          chmod +x Godot_v3.6.1-stable_linux.x86_64
+          sudo mv Godot_v3.6.1-stable_linux.x86_64 /usr/local/bin/godot
+
+      # 下载 Android 导出模板
+      - name: Install export templates
+        run: |
+          mkdir -p ~/.local/share/godot/templates/3.6.1.stable
+          wget https://downloads.tuxfamily.org/godotengine/3.6.1/Godot_v3.6.1-stable_export_templates.tpz
+          unzip Godot_v3.6.1-stable_export_templates.tpz
+          mv templates/* ~/.local/share/godot/templates/3.6.1.stable/
 
       - name: Check project files
         run: |
