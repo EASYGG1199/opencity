@@ -24,8 +24,13 @@ jobs:
           use-dotnet: false
           include-templates: true
 
+      - name: Check project files
+        run: |
+          ls project
+          ls project/OpenCity
+
       - name: Build APK
-        working-directory: project
+        working-directory: project/OpenCity
         run: |
           godot --headless --export-release "Android" OpenCity.apk
 
@@ -33,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: project/OpenCity.apk
+          path: project/OpenCity/OpenCity.apk
